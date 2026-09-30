@@ -40,6 +40,7 @@ flowchart LR
 | `Sources/GoatOrSheepKit/` | Quiz questions, scoring and all the screens |
 | `Sources/GoatOrSheep/` | The app entry point and window |
 | `Sources/RenderScreenshots/` | Regenerates the README screenshots |
+| `Sources/RenderIcon/` | Draws the app icon into `Resources/Icon.png` |
 | `Tests/` | Tests for scoring, quiz flow and the feedback email link |
 | `scripts/build-app.sh` | Builds `build/Goat or Sheep.app` |
 
@@ -48,4 +49,5 @@ flowchart LR
 ```bash
 swift test
 swift run RenderScreenshots docs/screenshots
+swift run RenderIcon Resources/Icon.png   # then rebuild the app to pick up the new icon
 ```

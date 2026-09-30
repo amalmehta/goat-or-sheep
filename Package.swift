@@ -8,6 +8,7 @@ let package = Package(
         .target(name: "GoatOrSheepKit"),
         .executableTarget(name: "GoatOrSheep", dependencies: ["GoatOrSheepKit"]),
         .executableTarget(name: "RenderScreenshots", dependencies: ["GoatOrSheepKit"]),
+        .executableTarget(name: "RenderIcon"),
         .testTarget(name: "GoatOrSheepKitTests", dependencies: ["GoatOrSheepKit"]),
     ]
 )
