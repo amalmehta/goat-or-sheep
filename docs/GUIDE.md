@@ -14,6 +14,18 @@ open "build/Goat or Sheep.app"
 
 You can also drag `build/Goat or Sheep.app` into `/Applications`. For a quick run during development, use `swift run GoatOrSheep`.
 
+## Open the Website
+
+The website version lives in `web/` and needs no build step. Serve the folder so the icon loads:
+
+```bash
+python3 -m http.server 8321 --directory web
+```
+
+Then open http://localhost:8321. Any static host works: upload `web/index.html` and `web/icon.png` together.
+
+On the website the Feedback tab shows the email address, a **Copy Message** button and an **Open Email** link, because some browsers don't open a mail app from a link.
+
 ## Using It
 
 1. Click **Take the Quiz**.
@@ -24,7 +36,7 @@ The **Feedback** button in the bottom-right corner opens a short form. **Open Em
 
 ## How Scoring Works
 
-Every question has two goat answers and two sheep answers. There are nine questions, so there can't be a tie: five or more goat answers makes you a Goat. The questions live in `Sources/GoatOrSheepKit/Quiz.swift`.
+Every question has two goat answers and two sheep answers. There are nine questions, so there can't be a tie: five or more goat answers makes you a Goat. The questions live in `Sources/GoatOrSheepKit/Quiz.swift`, with a copy in `web/index.html`. If you edit one, edit the other; `swift test` fails when they differ.
 
 ```mermaid
 flowchart LR
@@ -41,7 +53,8 @@ flowchart LR
 | `Sources/GoatOrSheep/` | The app entry point and window |
 | `Sources/RenderScreenshots/` | Regenerates the README screenshots |
 | `Sources/RenderIcon/` | Draws the app icon into `Resources/Icon.png` |
-| `Tests/` | Tests for scoring, quiz flow and the feedback email link |
+| `web/` | The website version: one HTML page plus its icon |
+| `Tests/` | Tests for scoring, quiz flow, the feedback email link, and that the website's questions match the app's |
 | `scripts/build-app.sh` | Builds `build/Goat or Sheep.app` |
 
 ## Development

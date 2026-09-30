@@ -45,4 +45,18 @@ final class QuizTests: XCTestCase {
         XCTAssertTrue(url.hasPrefix("mailto:a@b.com?subject=Goat%20or%20Sheep%20feedback"))
         XCTAssertTrue(url.contains("body=hi%20%26%20bye"))
     }
+
+    func testWebsiteQuestionsMatchApp() throws {
+        let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+            .deletingLastPathComponent().deletingLastPathComponent()
+        let html = try String(contentsOf: root.appendingPathComponent("web/index.html"), encoding: .utf8)
+        for q in Quiz.questions {
+            XCTAssertTrue(html.contains("[\"\(q.prompt)\", ["), "missing question: \(q.prompt)")
+            for a in q.answers {
+                XCTAssertTrue(html.contains("[\"\(a.text)\", \"\(a.animal.rawValue)\"]"), "missing or mismatched answer: \(a.text)")
+            }
+        }
+        XCTAssertTrue(html.contains(Animal.goat.blurb))
+        XCTAssertTrue(html.contains(Animal.sheep.blurb))
+    }
 }

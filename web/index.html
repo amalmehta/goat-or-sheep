@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Goat or Sheep</title>
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+  /* Layout: one card on an open sky, standing on a strip of meadow. Same palette as the app icon. */
+  :root {
+    --sky: #dcefFb;
+    --sky-deep: #9fd2f3;
+    --meadow: #74b95e;
+    --card: #ffffff;
+    --ink: #2f2b2c;
+    --muted: #5f6b73;
+    --line: #d3e3ee;
+    --goat: #b9854f;
+    --wool: #ebe6dc;
+    --button: #3f3b3c;
+    --button-ink: #ffffff;
+    --choice: #f2f7fb;
+    --choice-hover: #e3eff8;
+    --focus: #2b7bbd;
+    --display: "Baloo 2", "Arial Rounded MT Bold", ui-rounded, system-ui, sans-serif;
+    --body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --sky: #111c28; --sky-deep: #1b2d40; --meadow: #2f5a2c; --card: #1a2632; --ink: #eef3f6;
+      --muted: #a3b2bd; --line: #2c3c4b; --goat: #d4a371; --wool: #3a4550; --button: #eef3f6;
+      --button-ink: #1a2632; --choice: #22313f; --choice-hover: #2b3d4e; --focus: #7cc0f5;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --sky: #111c28; --sky-deep: #1b2d40; --meadow: #2f5a2c; --card: #1a2632; --ink: #eef3f6;
+    --muted: #a3b2bd; --line: #2c3c4b; --goat: #d4a371; --wool: #3a4550; --button: #eef3f6;
+    --button-ink: #1a2632; --choice: #22313f; --choice-hover: #2b3d4e; --focus: #7cc0f5;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { min-height: 100%; }
+  body {
+    margin: 0;
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: linear-gradient(var(--sky-deep), var(--sky) 60%) fixed, var(--sky);
+    padding-inline: 16px;
+    padding-block: 48px 120px;
+    position: relative;
+  }
+  body::after {
+    content: "";
+    position: fixed;
+    left: -10%; right: -10%; bottom: -60px;
+    height: 150px;
+    background: var(--meadow);
+    border-radius: 50% 50% 0 0;
+    z-index: -1;
+  }
+  main {
+    max-width: 560px;
+    margin-inline: auto;
+    background: var(--card);
+    border-radius: 28px;
+    padding: clamp(24px, 6vw, 44px);
+    box-shadow: 0 18px 40px -20px rgb(20 50 80 / 0.45);
+  }
+  h1, h2 { font-family: var(--display); font-weight: 800; line-height: 1.1; margin: 0; text-wrap: balance; }
+  h1 { font-size: clamp(2.4rem, 8vw, 3.2rem); }
+  h2 { font-size: clamp(1.5rem, 5vw, 1.9rem); }
+  p { margin: 0; }
+  .muted { color: var(--muted); }
+
+  button { font: inherit; color: inherit; cursor: pointer; }
+  button:focus-visible, a:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  .primary {
+    background: var(--button); color: var(--button-ink); border: 0;
+    border-radius: 999px; padding: 12px 28px; font-weight: 600; font-size: 1.05rem;
+  }
+  .primary:hover { opacity: 0.9; }
+
+  /* Start */
+  .start { display: grid; justify-items: center; text-align: center; gap: 16px; }
+  .start img { width: 160px; height: 160px; }
+  .start .facts {
+    font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600;
+  }
+  .start p.lede { max-width: 30ch; font-size: 1.1rem; }
+
+  /* Question */
+  .topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .back { background: none; border: 0; padding: 4px 0; color: var(--muted); font-weight: 500; }
+  .count { color: var(--muted); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+  .progress { height: 8px; background: var(--line); border-radius: 999px; margin-block: 14px 26px; overflow: hidden; }
+  .progress span { display: block; height: 100%; background: var(--meadow); border-radius: inherit; transition: width 200ms ease; }
+  .answers { display: grid; gap: 10px; margin-top: 22px; }
+  .answer {
+    display: flex; gap: 14px; align-items: center; text-align: left;
+    background: var(--choice); border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px 16px; font-size: 1rem;
+  }
+  .answer:hover { background: var(--choice-hover); }
+  .key {
+    flex: none; width: 26px; height: 26px; display: grid; place-items: center;
+    border-radius: 8px; border: 1px solid var(--line); background: var(--card);
+    font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums;
+  }
+
+  /* Result */
+  .result { display: grid; justify-items: center; text-align: center; gap: 14px; }
+  .result .animal { font-size: 96px; line-height: 1; }
+  .result p.blurb { max-width: 36ch; color: var(--muted); font-size: 1.05rem; }
+  .tally { width: 100%; max-width: 360px; display: grid; gap: 6px; margin-top: 6px; }
+  .tally .labels { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .bar { display: flex; gap: 2px; height: 12px; border-radius: 999px; overflow: hidden; background: var(--wool); }
+  .bar span { background: var(--goat); }
+  .again { margin-top: 10px; }
+
+  /* Feedback tab */
+  .feedback-tab {
+    position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    background: var(--card); color: var(--muted); border: 1px solid var(--line);
+    border-radius: 999px; padding: 6px 14px; font-size: 0.85rem; opacity: 0.9;
+  }
+  .feedback-tab:hover { opacity: 1; color: var(--ink); }
+  .feedback {
+    position: fixed; right: 16px; bottom: calc(60px + env(safe-area-inset-bottom, 0px));
+    width: min(360px, calc(100vw - 32px));
+    background: var(--card); border: 1px solid var(--line); border-radius: 18px;
+    padding: 18px; display: grid; gap: 10px;
+    box-shadow: 0 18px 40px -16px rgb(20 50 80 / 0.5);
+  }
+  .feedback h3 { margin: 0; font-size: 1rem; }
+  .feedback textarea {
+    width: 100%; min-height: 110px; resize: vertical; font: inherit; font-size: 0.95rem;
+    color: var(--ink); background: var(--choice); border: 1px solid var(--line); border-radius: 10px; padding: 10px;
+  }
+  .feedback .addr { font-size: 0.85rem; color: var(--muted); user-select: all; overflow-wrap: anywhere; }
+  .feedback .row { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; }
+  .feedback .row button, .feedback .row a {
+    border: 1px solid var(--line); background: var(--choice); color: var(--ink);
+    border-radius: 999px; padding: 6px 14px; font-size: 0.9rem; text-decoration: none;
+  }
+  .feedback .row a.send { background: var(--button); color: var(--button-ink); border-color: var(--button); }
+  .feedback .note { font-size: 0.8rem; color: var(--muted); min-height: 1.2em; }
+
+  @media (prefers-reduced-motion: reduce) { .progress span { transition: none; } }
+</style>
+</head>
+<body>
+
+<main id="app" aria-live="polite">
+  <section class="start">
+    <img src="icon.png" alt="A cartoon goat and sheep standing on a hill">
+    <h1>Goat or Sheep</h1>
+    <p class="lede">Do you climb your own cliff, or stick with the flock?</p>
+    <p class="facts">9 questions · about a minute</p>
+    <button class="primary" id="start">Take the Quiz</button>
+  </section>
+</main>
+
+<button class="feedback-tab" id="feedback-tab" aria-expanded="false" aria-controls="feedback">Feedback</button>
+<form class="feedback" id="feedback" hidden>
+  <h3>Send Feedback</h3>
+  <label for="feedback-text" class="muted" style="font-size:0.85rem">What should change?</label>
+  <textarea id="feedback-text"></textarea>
+  <p class="addr">Send it to <span id="feedback-addr">amal.mehta@gmail.com</span></p>
+  <div class="row">
+    <button type="button" id="feedback-close">Close</button>
+    <button type="button" id="feedback-copy">Copy Message</button>
+    <a class="send" id="feedback-send" href="mailto:amal.mehta@gmail.com">Open Email</a>
+  </div>
+  <p class="note" id="feedback-note"></p>
+</form>
+
+<script>
+// Keep in sync with Sources/GoatOrSheepKit/Quiz.swift (a test checks this).
+const QUESTIONS = [
+  ["Your friends pick a restaurant you don't love. You…", [
+    ["Pitch a better place and book it", "goat"],
+    ["Go. It's about the company", "sheep"],
+    ["Go, but order something off-menu", "goat"],
+    ["Read the reviews everyone else is reading", "sheep"]]],
+  ["A new app everyone's talking about comes out. You…", [
+    ["Download it because everyone did", "sheep"],
+    ["Already tried it last month", "goat"],
+    ["Wait and see if it sticks", "sheep"],
+    ["Skip it. You like your own setup", "goat"]]],
+  ["Your ideal weekend is…", [
+    ["A group trip someone else planned", "sheep"],
+    ["A solo hike somewhere steep", "goat"],
+    ["Whatever the group decides", "sheep"],
+    ["A project you've been obsessing over", "goat"]]],
+  ["In a meeting, your idea gets ignored. You…", [
+    ["Bring it up again, louder", "goat"],
+    ["Let it go. The team has momentum", "sheep"],
+    ["Build a prototype and show them", "goat"],
+    ["Back the idea that's winning", "sheep"]]],
+  ["Rules are…", [
+    ["There for a reason", "sheep"],
+    ["Suggestions", "goat"],
+    ["What keeps things fair", "sheep"],
+    ["Mostly for other people", "goat"]]],
+  ["At a buffet you…", [
+    ["Try one of everything, weird stuff first", "goat"],
+    ["Follow the line and take what's popular", "sheep"],
+    ["Go straight for dessert", "goat"],
+    ["Stick to what you know", "sheep"]]],
+  ["Your phone's home screen is…", [
+    ["Untouched since the day you got it", "sheep"],
+    ["A system only you understand", "goat"],
+    ["The same apps as your friends", "sheep"],
+    ["One page, nothing extra", "goat"]]],
+  ["You're lost in a new city. You…", [
+    ["Follow the crowd. They probably know", "sheep"],
+    ["Pick a direction and commit", "goat"],
+    ["Ask someone for directions", "sheep"],
+    ["Climb something to get a better view", "goat"]]],
+  ["Pick a motto.", [
+    ["Safety in numbers", "sheep"],
+    ["Why walk when you can climb?", "goat"],
+    ["Go with the flow", "sheep"],
+    ["Eat first, ask questions later", "goat"]]],
+];
+
+const ANIMALS = {
+  goat: { name: "Goat", emoji: "🐐",
+    blurb: "You pick your own path, even when it's a cliff face. Curious, stubborn in the best way, and willing to try anything once, including the thing nobody else will eat." },
+  sheep: { name: "Sheep", emoji: "🐑",
+    blurb: "You know there's strength in the flock. Calm, loyal, and easy to be around, you keep the group together and rarely end up stuck on a ledge." },
+};
+
+const app = document.getElementById("app");
+const startScreen = app.innerHTML;
+let picks = [];
+
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// With an odd number of questions there's never a tie.
+function score(p) {
+  const goats = p.filter(a => a === "goat").length;
+  return { goats, total: p.length, animal: goats * 2 > p.length ? "goat" : "sheep" };
+}
+
+function showStart() {
+  picks = [];
+  app.innerHTML = startScreen;
+  document.getElementById("start").onclick = () => showQuestion();
+}
+
+function showQuestion() {
+  const i = picks.length;
+  const [prompt, answers] = QUESTIONS[i];
+  app.innerHTML = `
+    <div class="topbar">
+      <button class="back" id="back">‹ Back</button>
+      <span class="count">Question ${i + 1} of ${QUESTIONS.length}</span>
+    </div>
+    <div class="progress" aria-hidden="true"><span style="width:${(i / QUESTIONS.length) * 100}%"></span></div>
+    <h2>${esc(prompt)}</h2>
+    <div class="answers">
+      ${answers.map(([text], n) => `<button class="answer" data-n="${n}"><span class="key">${n + 1}</span><span>${esc(text)}</span></button>`).join("")}
+    </div>`;
+  document.getElementById("back").onclick = back;
+  app.querySelectorAll(".answer").forEach(b => b.onclick = () => choose(+b.dataset.n));
+  app.querySelector(".answer").focus({ preventScroll: true });
+}
+
+function choose(n) {
+  picks.push(QUESTIONS[picks.length][1][n][1]);
+  picks.length < QUESTIONS.length ? showQuestion() : showResult();
+}
+
+function back() {
+  if (!picks.length) return showStart();
+  picks.pop();
+  showQuestion();
+}
+
+function showResult() {
+  const r = score(picks);
+  const a = ANIMALS[r.animal];
+  app.innerHTML = `
+    <section class="result">
+      <div class="animal" aria-hidden="true">${a.emoji}</div>
+      <h2>You're a ${a.name}.</h2>
+      <p class="blurb">${a.blurb}</p>
+      <div class="tally">
+        <div class="labels"><span>🐐 Goat ${r.goats}</span><span>Sheep ${r.total - r.goats} 🐑</span></div>
+        <div class="bar" role="img" aria-label="${r.goats} goat answers, ${r.total - r.goats} sheep answers">
+          <span style="width:${(r.goats / r.total) * 100}%"></span>
+        </div>
+      </div>
+      <button class="primary again" id="again">Take It Again</button>
+    </section>`;
+  document.getElementById("again").onclick = () => { picks = []; showQuestion(); };
+}
+
+document.addEventListener("keydown", e => {
+  if (e.target.closest && e.target.closest("textarea")) return;
+  const n = Number(e.key) - 1;
+  if (app.querySelector(".answers") && n >= 0 && n < 4) choose(n);
+});
+
+// Feedback
+const panel = document.getElementById("feedback");
+const tab = document.getElementById("feedback-tab");
+const text = document.getElementById("feedback-text");
+const note = document.getElementById("feedback-note");
+const send = document.getElementById("feedback-send");
+const addr = document.getElementById("feedback-addr").textContent;
+
+function setPanel(open) {
+  panel.hidden = !open;
+  tab.setAttribute("aria-expanded", String(open));
+  note.textContent = "";
+  if (open) text.focus();
+}
+tab.onclick = () => setPanel(panel.hidden);
+document.getElementById("feedback-close").onclick = () => setPanel(false);
+panel.addEventListener("submit", e => e.preventDefault());
+text.addEventListener("input", () => {
+  send.href = `mailto:${addr}?subject=${encodeURIComponent("Goat or Sheep feedback")}&body=${encodeURIComponent(text.value)}`;
+});
+document.getElementById("feedback-copy").onclick = () => {
+  const done = () => { note.textContent = "Copied. Paste it into an email to the address above."; };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text.value).then(done, () => { text.select(); note.textContent = "Select-all is on. Press Cmd+C or Ctrl+C to copy."; });
+  } else { text.select(); note.textContent = "Select-all is on. Press Cmd+C or Ctrl+C to copy."; }
+};
+send.addEventListener("click", () => { note.textContent = "If no email app opened, copy the message and send it to the address above."; });
+
+showStart();
+</script>
+</body>
+</html>

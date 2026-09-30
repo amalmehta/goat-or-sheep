@@ -45,11 +45,13 @@ Asked and answered (2026-09-29):
 - Native Mac app only for now; no website yet.
 - Feedback tab opens a pre-filled email draft to amal.mehta@gmail.com.
 - Local git only; not pushed to GitHub.
+- Website (2026-09-30): local files in web/ plus a private claude.ai Artifact link.
 
 Decided without asking:
 - SwiftUI + Swift Package Manager (no .xcodeproj); scripts/build-app.sh wraps it into "Goat or Sheep.app", ad-hoc signed, bundle ID com.amalmehta.goat-or-sheep.
 - 9 questions × 4 answers (2 goat, 2 sheep); odd count so there's never a tie; majority wins.
 - Emoji (🐐 🐑) as in-app artwork; the app icon is custom-drawn (goat and sheep on a hill), not Apple emoji, which aren't licensed for icons; fixed 560×520 window; macOS 14+.
+- Website is one plain HTML/CSS/JS page (no framework) with the questions copied from the app; a test keeps the two in sync. Its feedback tab shows the address and a Copy button as well as a mailto link.
 - README screenshots come from an offscreen renderer (RenderScreenshots target) rather than live screen capture.
 
 CHANGELOG:
@@ -57,6 +59,7 @@ CHANGELOG:
 - 2026-09-29 — created
 - 2026-09-29 — built v1: Goat or Sheep Mac app (9-question quiz, result screen, feedback tab), tests, README, docs/GUIDE.md
 - 2026-09-30 — added a custom Mac app icon (drawn in code by RenderIcon, bundled by scripts/build-app.sh)
+- 2026-09-30 — built the website version (web/index.html), published privately at https://claude.ai/artifact/PZaqSqZGC1XvTM9V6mXs4i
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub
