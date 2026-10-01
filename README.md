@@ -10,6 +10,9 @@ A little Mac app, plus a matching single-page website, with a nine-question pers
 
 **Take the quiz in your browser: [amalmehta.github.io/goat-or-sheep](https://amalmehta.github.io/goat-or-sheep/)**
 
-<a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website.png" width="100%" alt="The Goat or Sheep website start screen"></a>
+<p>
+  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website.png" width="49%" alt="The Goat or Sheep website in light mode"></a>
+  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website-dark.png" width="49%" alt="The Goat or Sheep website in dark mode"></a>
+</p>
 
 Setup, usage and how it works: **[docs/GUIDE.md](docs/GUIDE.md)**

@@ -65,6 +65,7 @@ CHANGELOG:
 - 2026-10-01 — deleted the private claude.ai copy of the website; GitHub Pages is now the only hosted version
 - 2026-10-01 — set the GitHub repo's homepage link to the GitHub Pages site
 - 2026-10-01 — added a screenshot of the website to the README
+- 2026-10-01 — added a dark mode screenshot of the website to the README, beside the light one
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub
