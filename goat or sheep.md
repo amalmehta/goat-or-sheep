@@ -44,7 +44,7 @@ Asked and answered (2026-09-29):
 - "Goat or sheep" = a personality quiz: Goat = independent/goes its own way, Sheep = follows the flock.
 - Native Mac app only for now; no website yet.
 - Feedback tab opens a pre-filled email draft to amal.mehta@gmail.com.
-- Local git only; not pushed to GitHub.
+- Local git only at first; pushed to a public GitHub repo on 2026-10-01 at the user's request.
 - Website (2026-09-30): local files in web/ plus a private claude.ai Artifact link.
 
 Decided without asking:
@@ -60,6 +60,7 @@ CHANGELOG:
 - 2026-09-29 — built v1: Goat or Sheep Mac app (9-question quiz, result screen, feedback tab), tests, README, docs/GUIDE.md
 - 2026-09-30 — added a custom Mac app icon (drawn in code by RenderIcon, bundled by scripts/build-app.sh)
 - 2026-09-30 — built the website version (web/index.html), published privately at https://claude.ai/artifact/PZaqSqZGC1XvTM9V6mXs4i
+- 2026-10-01 — pushed to GitHub: https://github.com/amalmehta/goat-or-sheep (public)
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub
