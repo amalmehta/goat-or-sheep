@@ -37,4 +37,8 @@ MainActor.assumeIsolated {
     render(QuizState(screen: .question(3), picks: Array(goatPicks.prefix(3))), appearance: .aqua, to: "\(out)/question.png")
     render(QuizState(screen: .result, picks: goatPicks), appearance: .aqua, to: "\(out)/result-goat.png")
     render(QuizState(screen: .result, picks: sheepPicks), appearance: .darkAqua, to: "\(out)/result-sheep.png")
+
+    render(QuizState(screen: .start), appearance: .darkAqua, to: "\(out)/start-dark.png")
+    render(QuizState(screen: .question(3), picks: Array(goatPicks.prefix(3))), appearance: .darkAqua, to: "\(out)/question-dark.png")
+    render(QuizState(screen: .result, picks: goatPicks), appearance: .darkAqua, to: "\(out)/result-goat-dark.png")
 }

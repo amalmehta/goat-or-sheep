@@ -5,6 +5,11 @@
   <img src="docs/screenshots/question.png" width="32%" alt="A quiz question">
   <img src="docs/screenshots/result-goat.png" width="32%" alt="Goat result">
 </p>
+<p>
+  <img src="docs/screenshots/start-dark.png" width="32%" alt="Start screen in dark mode">
+  <img src="docs/screenshots/question-dark.png" width="32%" alt="A quiz question in dark mode">
+  <img src="docs/screenshots/result-goat-dark.png" width="32%" alt="Goat result in dark mode">
+</p>
 
 A little Mac app, plus a matching single-page website, with a nine-question personality quiz that tells you whether you're a **Goat** (you climb your own cliff) or a **Sheep** (you stick with the flock).
 
