@@ -62,6 +62,7 @@ CHANGELOG:
 - 2026-09-30 — built the website version (web/index.html), published privately as a claude.ai Artifact
 - 2026-10-01 — pushed to GitHub: https://github.com/amalmehta/goat-or-sheep (public)
 - 2026-10-01 — turned on GitHub Pages for the website via a GitHub Actions workflow publishing web/: https://amalmehta.github.io/goat-or-sheep/
+- 2026-10-01 — deleted the private claude.ai copy of the website; GitHub Pages is now the only hosted version
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub
@@ -73,4 +74,3 @@ CHANGELOG:
 - 2026-09-28 — changed meta-instruction: a README on GitHub always includes a visual
 - 2026-09-28 — added meta-instruction: name things like a person would, never snake_case
 - 2026-09-28 — changed meta-instruction: README leads with visuals; instructions live in a linked guide
-- 2026-10-01 — deleted the private claude.ai copy of the website; GitHub Pages is now the only hosted version
