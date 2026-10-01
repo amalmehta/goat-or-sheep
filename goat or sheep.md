@@ -61,6 +61,7 @@ CHANGELOG:
 - 2026-09-30 — added a custom Mac app icon (drawn in code by RenderIcon, bundled by scripts/build-app.sh)
 - 2026-09-30 — built the website version (web/index.html), published privately at https://claude.ai/artifact/PZaqSqZGC1XvTM9V6mXs4i
 - 2026-10-01 — pushed to GitHub: https://github.com/amalmehta/goat-or-sheep (public)
+- 2026-10-01 — turned on GitHub Pages for the website via a GitHub Actions workflow publishing web/: https://amalmehta.github.io/goat-or-sheep/
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub

@@ -16,7 +16,11 @@ You can also drag `build/Goat or Sheep.app` into `/Applications`. For a quick ru
 
 ## Open the Website
 
-The website version lives in `web/` and needs no build step. Serve the folder so the icon loads:
+The live site is at https://amalmehta.github.io/goat-or-sheep/. It republishes on every push to `main` that changes `web/` (see `.github/workflows/website.yml`).
+
+To run it locally:
+
+The website lives in `web/` and needs no build step. Serve the folder so the icon loads:
 
 ```bash
 python3 -m http.server 8321 --directory web
