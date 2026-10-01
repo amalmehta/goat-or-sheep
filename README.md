@@ -11,9 +11,10 @@ A little Mac app, plus a matching single-page website, with a nine-question pers
 **Take the quiz in your browser: [amalmehta.github.io/goat-or-sheep](https://amalmehta.github.io/goat-or-sheep/)**
 
 <p>
-  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website.png" height="220" alt="The Goat or Sheep website in light mode"></a>
-  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website-dark.png" height="220" alt="The Goat or Sheep website in dark mode"></a>
-  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website-phone.png" height="220" alt="The Goat or Sheep website on a phone"></a>
+  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website.png" height="200" alt="The Goat or Sheep website in light mode"></a>
+  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website-dark.png" height="200" alt="The Goat or Sheep website in dark mode"></a>
+  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website-phone.png" height="200" alt="The Goat or Sheep website on a phone"></a>
+  <a href="https://amalmehta.github.io/goat-or-sheep/"><img src="docs/screenshots/website-phone-dark.png" height="200" alt="The Goat or Sheep website on a phone in dark mode"></a>
 </p>
 
 Setup, usage and how it works: **[docs/GUIDE.md](docs/GUIDE.md)**
