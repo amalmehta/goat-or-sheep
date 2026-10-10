@@ -94,6 +94,42 @@ public enum Quiz {
             s("Ask someone for directions"),
             g("Climb something to get a better view"),
         ]),
+        Question(prompt: "Your manager announces a plan you think will fail. You…", answers: [
+            g("Say so in the meeting, with your reasons"),
+            s("Stay quiet and hope someone else says it"),
+            g("Ask for ten minutes with them afterwards"),
+            s("Go along with it. They probably know something you don't"),
+        ]),
+        Question(prompt: "Someone takes credit for your work. You…", answers: [
+            g("Correct the record, politely but clearly"),
+            s("Let it slide. It'll even out"),
+            s("Vent to a friend instead"),
+            g("Tell them, then tell your manager"),
+        ]),
+        Question(prompt: "The meeting ends with “Any questions?” You…", answers: [
+            g("Ask the one everyone's thinking"),
+            s("Stay quiet and look it up later"),
+            s("Wait to see if anyone else goes first"),
+            g("Raise your hand before you lose your nerve"),
+        ]),
+        Question(prompt: "Your parents have already decided what's best for you. You…", answers: [
+            s("Agree out loud, disagree in your head"),
+            g("Tell them calmly that you see it differently"),
+            s("Let it go. It's not worth the fight"),
+            g("Make your own call and explain it later"),
+        ]),
+        Question(prompt: "At a family dinner, everyone agrees on something you don't. You…", answers: [
+            s("Nod along to keep the peace"),
+            g("Share your view, even if the room goes quiet"),
+            s("Save it for the car ride home"),
+            g("Ask a question that makes them think twice"),
+        ]),
+        Question(prompt: "A friend makes a joke that crosses a line. You…", answers: [
+            s("Laugh along so it isn't awkward"),
+            g("Tell them it wasn't funny"),
+            s("Change the subject"),
+            g("Pull them aside later and say it bothered you"),
+        ]),
         Question(prompt: "Pick a motto.", answers: [
             s("Safety in numbers"),
             g("Why walk when you can climb?"),

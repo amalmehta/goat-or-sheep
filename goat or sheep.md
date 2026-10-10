@@ -49,7 +49,7 @@ Asked and answered (2026-09-29):
 
 Decided without asking:
 - SwiftUI + Swift Package Manager (no .xcodeproj); scripts/build-app.sh wraps it into "Goat or Sheep.app", ad-hoc signed, bundle ID com.amalmehta.goat-or-sheep.
-- 9 questions × 4 answers (2 goat, 2 sheep); odd count so there's never a tie; majority wins.
+- 9 questions × 4 answers (2 goat, 2 sheep); odd count so there's never a tie; majority wins. Grew to 15 on 2026-10-10 with six user-requested questions about speaking up (work, parents, friends), placed before the closing motto question.
 - Emoji (🐐 🐑) as in-app artwork; the app icon is custom-drawn (goat and sheep on a hill), not Apple emoji, which aren't licensed for icons; fixed 560×520 window; macOS 14+.
 - Website is one plain HTML/CSS/JS page (no framework) with the questions copied from the app; a test keeps the two in sync. Its feedback tab shows the address and a Copy button as well as a mailto link.
 - README screenshots come from an offscreen renderer (RenderScreenshots target) rather than live screen capture.
@@ -70,6 +70,7 @@ CHANGELOG:
 - 2026-10-01 — added a dark mode phone screenshot of the website to the README
 - 2026-10-01 — added dark mode screenshots of the Mac app to the README (rendered by RenderScreenshots)
 - 2026-10-01 — added, then undid at the user's request, Sheep result screenshots in the README
+- 2026-10-10 — added six questions about speaking up at work, with parents and with friends (quiz is now 15 questions, Mac app and website); refreshed screenshots and docs
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub

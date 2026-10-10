@@ -27,7 +27,7 @@ MainActor.assumeIsolated {
 
     let q = Quiz.questions
     let goatPicks = q.enumerated().map { i, question in
-        question.answers.first { $0.animal == (i < 6 ? .goat : .sheep) }!
+        question.answers.first { $0.animal == (i < 10 ? .goat : .sheep) }!
     }
     let sheepPicks = q.enumerated().map { i, question in
         question.answers.first { $0.animal == (i < 2 ? .goat : .sheep) }!

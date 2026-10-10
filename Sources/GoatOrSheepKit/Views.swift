@@ -77,7 +77,7 @@ struct StartView: View {
                 Text("🐑").font(.system(size: 72))
             }
             Text("Goat or Sheep").font(.largeTitle.bold())
-            Text("Nine quick questions. Do you climb your own cliff, or stick with the flock?")
+            Text("Fifteen quick questions. Do you climb your own cliff, or stick with the flock?")
                 .font(.title3)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

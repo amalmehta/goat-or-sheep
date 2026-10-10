@@ -58,5 +58,6 @@ final class QuizTests: XCTestCase {
         }
         XCTAssertTrue(html.contains(Animal.goat.blurb))
         XCTAssertTrue(html.contains(Animal.sheep.blurb))
+        XCTAssertTrue(html.contains("\(Quiz.questions.count) questions ·"), "website start screen shows the wrong question count")
     }
 }
