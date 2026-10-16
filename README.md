@@ -23,3 +23,5 @@ A little Mac app, plus a matching single-page website, with a fifteen-question p
 </p>
 
 Setup, usage and how it works: **[docs/GUIDE.md](docs/GUIDE.md)**
+
+How it's built (architecture, data, decisions and limits): **[docs/SYSTEM-DESIGN.md](docs/SYSTEM-DESIGN.md)**

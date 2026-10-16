@@ -72,6 +72,7 @@ CHANGELOG:
 - 2026-10-01 — added, then undid at the user's request, Sheep result screenshots in the README
 - 2026-10-10 — added six questions about speaking up at work, with parents and with friends (quiz is now 15 questions, Mac app and website); refreshed screenshots and docs
 - 2026-10-10 — added docs/SYSTEM-DESIGN.md: architecture diagram, components, flows, data, decisions and known limits
+- 2026-10-16 — linked docs/SYSTEM-DESIGN.md from the README
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub
