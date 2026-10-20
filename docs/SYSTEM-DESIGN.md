@@ -47,7 +47,7 @@ flowchart TB
 |---|---|---|
 | **GoatOrSheepKit** | `Sources/GoatOrSheepKit/` | The shared library. `Quiz.swift` holds the data model (`Animal`, `Answer`, `Question`, `QuizResult`), all fifteen questions and the `score` function. `Views.swift` holds `QuizState` (the screen state machine), every SwiftUI screen, the feedback sheet and `Feedback.mailURL`. Everything the app shows comes from here. |
 | **GoatOrSheep** | `Sources/GoatOrSheep/GoatOrSheepApp.swift` | The executable. Creates one `QuizState`, opens a single window with `ContentView` (560×520 at least, and it can be made bigger), and passes in the feedback address. Its `AppDelegate` makes the process a regular foreground app (needed under `swift run`) and quits when the window closes. |
-| **RenderScreenshots** | `Sources/RenderScreenshots/main.swift` | A dev tool. Renders `ContentView` offscreen for the start, question and result screens in light and dark, and loads `web/index.html` in an offscreen `WKWebView` at desktop (1200×760, 2×) and phone (390×844, 3×) sizes, light and dark. Writes every README image to `docs/screenshots/`. |
+| **RenderScreenshots** | `Sources/RenderScreenshots/` | A dev tool. Renders `ContentView` offscreen for the start, question and result screens in light and dark, and loads `web/index.html` in an offscreen `WKWebView` at desktop (1200×760, 2×) and phone (390×844, 3×) sizes, light and dark. Writes every README image to `docs/screenshots/` with its own lossless PNG writer (`PNG.swift`), which converts to sRGB, drops the unused alpha channel and picks the best PNG filter per row, so the files are about 40% smaller than ImageIO's. |
 | **RenderIcon** | `Sources/RenderIcon/main.swift` | A dev tool. Draws the goat-and-sheep-on-a-hill icon with SwiftUI shapes and writes it twice from the same drawing: 1024×1024 to `Resources/Icon.png` and 320×320 to `web/icon.png`. It doesn't depend on the kit. |
 | **Build script** | `scripts/build-app.sh` | Builds the release binary, makes an `.icns` from `Resources/Icon.png` with `sips` and `iconutil`, writes `Info.plist` (bundle ID `com.amalmehta.goat-or-sheep`, macOS 14+), assembles `build/Goat or Sheep.app` and ad-hoc signs it. |
 | **Website quiz data** | `web/quiz.js` | The website's copy of the quiz: `QUESTIONS`, `ANIMALS` (names, emoji, blurbs) and `score`. Plain JavaScript with no page code, so the tests can run it outside a browser. |
@@ -89,7 +89,7 @@ stateDiagram-v2
 
 - **Mac app:** `./scripts/build-app.sh` → `build/Goat or Sheep.app`. There is no release channel; the bundle is built locally and opened or copied to `/Applications`. On another Mac, Gatekeeper asks once before opening it (see the guide).
 - **Website:** push a change under `web/` to `main` → the workflow deploys `web/` to GitHub Pages. Pushes are serialized by the `pages` concurrency group, and a newer push cancels an older one in progress.
-- **Changing questions:** edit `Quiz.swift` and `web/quiz.js`, then run `swift test`, which fails if the two disagree in any way. The website's question count updates itself. Re-run `swift run RenderScreenshots` to refresh every README image.
+- **Changing questions:** edit `Quiz.swift` and `web/quiz.js`, then run `swift test`, which fails if the two disagree in any way. The website's question count updates itself. Re-run `swift run -c release RenderScreenshots` to refresh every README image.
 - **Changing the icon:** edit `RenderIcon`, run `swift run RenderIcon` (writes both sizes), then rebuild the app.
 
 ## Where Data Lives
@@ -123,6 +123,7 @@ There is no analytics and there are no cookies. The only network requests are fo
 ## Known Limits
 
 - **The website's screen flow is written twice.** The quiz data and scoring are checked against the app, but the start, question and result screens and Back are separate code in `Views.swift` and `web/index.html`. Both follow the same simple rule (the current question is `picks.count`), but no test compares them.
+- **Screenshots need a release build to be quick.** The PNG writer is plain Swift, so in a debug build `RenderScreenshots` takes several minutes; with `-c release` it takes under half a minute.
 - **Website screenshots need the network.** The page loads its fonts from Google Fonts, so `RenderScreenshots` needs an internet connection, and it fails rather than save images in a fallback font.
 - **Website screenshots show Safari's rendering.** They're drawn by WebKit, so they show the page as Safari draws it, not Chrome or Firefox.
 - **Opening the app on another Mac takes one extra step.** Without notarization, Gatekeeper blocks the first launch until the user allows it in System Settings. There's no auto-update.

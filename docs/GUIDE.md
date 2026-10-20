@@ -75,8 +75,8 @@ flowchart LR
 
 ```bash
 swift test
-swift run RenderScreenshots   # needs internet for the website's fonts
-swift run RenderIcon          # then rebuild the app to pick up the new icon
+swift run -c release RenderScreenshots   # needs internet for the website's fonts; release is much faster
+swift run RenderIcon                     # then rebuild the app to pick up the new icon
 ```
 
 Run these from the repo root.

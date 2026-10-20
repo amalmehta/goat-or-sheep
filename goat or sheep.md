@@ -74,6 +74,7 @@ CHANGELOG:
 - 2026-10-10 — added docs/SYSTEM-DESIGN.md: architecture diagram, components, flows, data, decisions and known limits
 - 2026-10-16 — linked docs/SYSTEM-DESIGN.md from the README
 - 2026-10-16 — fixed the design doc's known limits: website quiz data moved to web/quiz.js and checked against the app in JavaScriptCore (questions, results and scoring); website question count comes from the data; app window can grow and long questions scroll; app feedback sheet shows the address, has Copy Message and says when no mail app is set up; RenderIcon writes the website icon too; RenderScreenshots renders the website screenshots; removed unused result-sheep.png; guide explains opening the app on another Mac. Kept on purpose: no saved progress, ad-hoc signing, binary Goat/Sheep result
+- 2026-10-20 — compressed the README screenshots losslessly (2.3 MB → 1.4 MB, same pixels): RenderScreenshots writes PNGs with its own encoder (sRGB, no alpha, best filter per row); run it with -c release
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub
