@@ -1,5 +1,6 @@
 // Renders README screenshots of the Mac app's screens and the website into docs/screenshots/.
-// Usage (from the repo root): swift run RenderScreenshots [output-dir]
+// Usage (from the repo root): swift run -c release RenderScreenshots [output-dir]
+// (A debug build works too, but PNG.swift makes it take minutes instead of seconds.)
 import AppKit
 import SwiftUI
 import WebKit
@@ -17,7 +18,7 @@ func render(_ state: QuizState, appearance: NSAppearance.Name, to path: String) 
 
     guard let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { return }
     view.cacheDisplay(in: view.bounds, to: rep)
-    try! rep.representation(using: .png, properties: [:])!.write(to: URL(fileURLWithPath: path))
+    PNG.write(rep.cgImage!, to: path)
     print("wrote \(path)")
 }
 
@@ -82,7 +83,7 @@ func renderWebsite(width: CGFloat, height: CGFloat, scale: CGFloat, appearance: 
     NSGraphicsContext.current?.imageInterpolation = .high
     snapshot!.draw(in: NSRect(x: 0, y: 0, width: rep.pixelsWide, height: rep.pixelsHigh))
     NSGraphicsContext.restoreGraphicsState()
-    try! rep.representation(using: .png, properties: [:])!.write(to: URL(fileURLWithPath: path))
+    PNG.write(rep.cgImage!, to: path)
     print("wrote \(path)")
 }
 
