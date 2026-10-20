@@ -58,7 +58,7 @@ public struct ContentView: View {
             FeedbackTab { showingFeedback = true }
                 .padding(12)
         }
-        .frame(width: 560, height: 520)
+        .frame(minWidth: 560, minHeight: 520)
         .background(Color(nsColor: .windowBackgroundColor))
         .sheet(isPresented: $showingFeedback) {
             FeedbackView(recipient: feedbackRecipient) { showingFeedback = false }
@@ -95,8 +95,16 @@ struct QuestionView: View {
     let index: Int
 
     var body: some View {
+        // Scrolls only when a long question doesn't fit the window.
+        ViewThatFits(in: .vertical) {
+            content
+            ScrollView { content.padding(.trailing, 12) }
+        }
+    }
+
+    private var content: some View {
         let question = Quiz.questions[index]
-        VStack(alignment: .leading, spacing: 18) {
+        return VStack(alignment: .leading, spacing: 18) {
             HStack {
                 Button { state.back() } label: { Label("Back", systemImage: "chevron.left") }
                     .buttonStyle(.borderless)
@@ -185,6 +193,7 @@ public struct FeedbackView: View {
     let recipient: String
     var dismiss: () -> Void
     @State private var text = ""
+    @State private var note = ""
 
     public init(recipient: String, dismiss: @escaping () -> Void) {
         self.recipient = recipient
@@ -197,26 +206,48 @@ public struct FeedbackView: View {
             Text("This opens an email draft in your mail app. Nothing is sent until you send it there.")
                 .font(.callout)
                 .foregroundStyle(.secondary)
+            HStack(spacing: 4) {
+                Text("Send it to").foregroundStyle(.secondary)
+                Text(recipient).textSelection(.enabled)
+            }
+            .font(.callout)
             TextEditor(text: $text)
                 .font(.body)
                 .frame(minHeight: 140)
                 .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.gray.opacity(0.3)))
             HStack {
+                Button("Copy Message") {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(text, forType: .string)
+                    note = "Copied. Paste it into an email to \(recipient)."
+                }
+                .disabled(isEmpty)
                 Spacer()
                 Button("Cancel", action: dismiss).keyboardShortcut(.cancelAction)
                 Button("Open Email") {
-                    if let url = Feedback.mailURL(to: recipient, body: text) {
-                        NSWorkspace.shared.open(url)
+                    // Without a mail app, opening a mailto: link does nothing, so say so instead.
+                    guard let url = Feedback.mailURL(to: recipient, body: text),
+                          NSWorkspace.shared.urlForApplication(toOpen: url) != nil,
+                          NSWorkspace.shared.open(url)
+                    else {
+                        note = "No email app is set up. Copy the message and send it to \(recipient)."
+                        return
                     }
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled(text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                .disabled(isEmpty)
             }
+            Text(note)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .frame(minHeight: 16, alignment: .top)
         }
         .padding(20)
         .frame(width: 400)
     }
+
+    private var isEmpty: Bool { text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 }
 
 public enum Feedback {

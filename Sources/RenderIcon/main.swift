@@ -1,5 +1,5 @@
-// Draws the app icon as a 1024×1024 PNG.
-// Usage: swift run RenderIcon [output.png]
+// Draws the app icon: 1024×1024 for the Mac app and 320×320 for the website.
+// Usage: swift run RenderIcon [app-icon.png] [web-icon.png]
 import AppKit
 import SwiftUI
 
@@ -101,13 +101,19 @@ struct Icon: View {
     }
 }
 
-MainActor.assumeIsolated {
-    let out = CommandLine.arguments.dropFirst().first ?? "Resources/Icon.png"
+@MainActor
+func write(size: Int, to out: String) {
     let renderer = ImageRenderer(content: Icon())
-    renderer.scale = 1
+    renderer.scale = CGFloat(size) / 1024
     guard let cg = renderer.cgImage else { fatalError("render failed") }
     let rep = NSBitmapImageRep(cgImage: cg)
     try? FileManager.default.createDirectory(at: URL(fileURLWithPath: out).deletingLastPathComponent(), withIntermediateDirectories: true)
     try! rep.representation(using: .png, properties: [:])!.write(to: URL(fileURLWithPath: out))
-    print("wrote \(out)")
+    print("wrote \(out) (\(size)×\(size))")
+}
+
+MainActor.assumeIsolated {
+    let args = Array(CommandLine.arguments.dropFirst())
+    write(size: 1024, to: args.first ?? "Resources/Icon.png")
+    write(size: 320, to: args.count > 1 ? args[1] : "web/icon.png")
 }

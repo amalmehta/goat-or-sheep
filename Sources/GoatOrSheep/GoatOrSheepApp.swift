@@ -10,7 +10,7 @@ struct GoatOrSheepApp: App {
         Window("Goat or Sheep", id: "main") {
             ContentView(state: state, feedbackRecipient: "amal.mehta@gmail.com")
         }
-        .windowResizability(.contentSize)
+        .windowResizability(.contentMinSize)
     }
 }
 
