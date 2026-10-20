@@ -51,7 +51,7 @@ Decided without asking:
 - SwiftUI + Swift Package Manager (no .xcodeproj); scripts/build-app.sh wraps it into "Goat or Sheep.app", ad-hoc signed, bundle ID com.amalmehta.goat-or-sheep.
 - 9 questions × 4 answers (2 goat, 2 sheep); odd count so there's never a tie; majority wins. Grew to 15 on 2026-10-10 with six user-requested questions about speaking up (work, parents, friends), placed before the closing motto question.
 - Emoji (🐐 🐑) as in-app artwork; the app icon is custom-drawn (goat and sheep on a hill), not Apple emoji, which aren't licensed for icons; fixed 560×520 window; macOS 14+.
-- Website is one plain HTML/CSS/JS page (no framework) with the questions copied from the app; a test keeps the two in sync. Its feedback tab shows the address and a Copy button as well as a mailto link.
+- Website is one plain HTML/CSS/JS page (no framework) with the questions copied from the app into web/quiz.js; tests run that file in JavaScriptCore to keep the two in sync. Its feedback tab shows the address and a Copy button as well as a mailto link.
 - README screenshots come from an offscreen renderer (RenderScreenshots target) rather than live screen capture.
 
 CHANGELOG:
@@ -73,6 +73,7 @@ CHANGELOG:
 - 2026-10-10 — added six questions about speaking up at work, with parents and with friends (quiz is now 15 questions, Mac app and website); refreshed screenshots and docs
 - 2026-10-10 — added docs/SYSTEM-DESIGN.md: architecture diagram, components, flows, data, decisions and known limits
 - 2026-10-16 — linked docs/SYSTEM-DESIGN.md from the README
+- 2026-10-16 — fixed the design doc's known limits: website quiz data moved to web/quiz.js and checked against the app in JavaScriptCore (questions, results and scoring); website question count comes from the data; app window can grow and long questions scroll; app feedback sheet shows the address, has Copy Message and says when no mail app is set up; RenderIcon writes the website icon too; RenderScreenshots renders the website screenshots; removed unused result-sheep.png; guide explains opening the app on another Mac. Kept on purpose: no saved progress, ad-hoc signing, binary Goat/Sheep result
 - 2026-09-15 — added meta-instruction: built-out applications include a small feedback tab
 - 2026-09-15 — added meta-instruction: no "Claude" attribution in commits, PRs, or branches
 - 2026-09-16 — added meta-instruction: always include a README when adding to GitHub

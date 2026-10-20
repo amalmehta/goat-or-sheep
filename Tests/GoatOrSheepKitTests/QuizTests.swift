@@ -1,3 +1,4 @@
+import JavaScriptCore
 import XCTest
 @testable import GoatOrSheepKit
 
@@ -46,18 +47,48 @@ final class QuizTests: XCTestCase {
         XCTAssertTrue(url.contains("body=hi%20%26%20bye"))
     }
 
-    func testWebsiteQuestionsMatchApp() throws {
+    // The website keeps its own copy of the quiz in web/quiz.js. These run that file in
+    // JavaScriptCore and compare it with the app's, so the two can't drift apart.
+    private func websiteQuiz() throws -> JSContext {
         let root = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
             .deletingLastPathComponent().deletingLastPathComponent()
-        let html = try String(contentsOf: root.appendingPathComponent("web/index.html"), encoding: .utf8)
-        for q in Quiz.questions {
-            XCTAssertTrue(html.contains("[\"\(q.prompt)\", ["), "missing question: \(q.prompt)")
-            for a in q.answers {
-                XCTAssertTrue(html.contains("[\"\(a.text)\", \"\(a.animal.rawValue)\"]"), "missing or mismatched answer: \(a.text)")
-            }
+        let js = try String(contentsOf: root.appendingPathComponent("web/quiz.js"), encoding: .utf8)
+        let context = try XCTUnwrap(JSContext())
+        context.evaluateScript(js)
+        XCTAssertNil(context.exception, "web/quiz.js threw: \(context.exception!)")
+        return context
+    }
+
+    func testWebsiteQuestionsMatchApp() throws {
+        let web = try XCTUnwrap(try websiteQuiz().evaluateScript("QUESTIONS").toArray() as? [[Any]])
+        let app = Quiz.questions.map { q in [q.prompt, q.answers.map { [$0.text, $0.animal.rawValue] }] as [Any] }
+        XCTAssertEqual(web.count, app.count, "website has a different number of questions")
+        for (w, a) in zip(web, app) {
+            XCTAssertEqual(w[0] as? String, a[0] as? String)
+            XCTAssertEqual(w[1] as? [[String]], a[1] as? [[String]], "answers differ for: \(a[0])")
         }
-        XCTAssertTrue(html.contains(Animal.goat.blurb))
-        XCTAssertTrue(html.contains(Animal.sheep.blurb))
-        XCTAssertTrue(html.contains("\(Quiz.questions.count) questions ·"), "website start screen shows the wrong question count")
+    }
+
+    func testWebsiteAnimalsMatchApp() throws {
+        let context = try websiteQuiz()
+        for animal in Animal.allCases {
+            let web = context.evaluateScript("ANIMALS.\(animal.rawValue)")!
+            XCTAssertEqual(web.forProperty("name").toString(), animal.name)
+            XCTAssertEqual(web.forProperty("emoji").toString(), animal.emoji)
+            XCTAssertEqual(web.forProperty("blurb").toString(), animal.blurb)
+        }
+    }
+
+    func testWebsiteScoringMatchesApp() throws {
+        let score = try XCTUnwrap(try websiteQuiz().objectForKeyedSubscript("score"))
+        let total = Quiz.questions.count
+        for goats in 0...total {
+            let picks = Array(repeating: "goat", count: goats) + Array(repeating: "sheep", count: total - goats)
+            let web = score.call(withArguments: [picks.shuffled()])!
+            let app = QuizResult(goatCount: goats, total: total)
+            XCTAssertEqual(web.forProperty("goats").toInt32(), Int32(app.goatCount))
+            XCTAssertEqual(web.forProperty("total").toInt32(), Int32(app.total))
+            XCTAssertEqual(web.forProperty("animal").toString(), app.animal.rawValue, "\(goats) goat answers")
+        }
     }
 }
